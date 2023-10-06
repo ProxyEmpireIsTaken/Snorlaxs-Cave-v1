@@ -20,3 +20,147 @@
     <div class="heading">
        <a href="https://discord.gg/Cqaa8x82Ch" class="headinglink" target="new">Empire Unblocker</a>
     </div>
+<script>
+    const customCSS = localStorage.getItem('websiteCSS');
+    if (customCSS) {
+      const styleSheet = document.createElement('style');
+      styleSheet.id = 'custom-css';
+      styleSheet.textContent = customCSS;
+      document.head.appendChild(styleSheet);
+    } else {
+      const defaultStyleSheet = document.createElement('link');
+      defaultStyleSheet.rel = 'static/assets/css';
+      defaultStyleSheet.href = 'static/assets/css';
+      defaultStyleSheet.id = 'custom-css';
+      document.head.appendChild(defaultStyleSheet);
+    }
+  </script>
+  <script src="/settings/css-editor/monaco/loader.js"></script>
+</head>
+<body>
+  <div class="settings-container">
+    <h2>CSS Editor</h2>
+    <div class="editor-container">
+      <div class="editor-header">
+        <button id="import-button">Import</button>
+        <button id="export-button">Export</button>
+        <button id="apply-button">Apply</button>
+      </div>
+      <div id="css-editor"></div>
+    </div>
+    <select id="css-select" class="config-select">
+      <option value="custom">Custom CSS</option>
+    </select>
+  </div>
+ <script>
+    function escapeHTML(css) {
+      return css.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function applyCustomCSS() {
+      const cssEditor = monaco.editor.getModels()[0];
+      const customCSS = cssEditor.getValue();
+
+      const styleSheets = document.getElementsByTagName('link');
+
+      for (let i = 0; i < styleSheets.length; i++) {
+        const styleSheet = styleSheets[i];
+        if (styleSheet.getAttribute('id') === 'custom-css') {
+          styleSheet.href = 'data:text/css;charset=utf-8,' + encodeURIComponent(customCSS);
+        }
+      }
+
+      cssEditor.setValue(escapeHTML(customCSS));
+
+      localStorage.setItem('websiteCSS', customCSS);
+    }
+
+    const applyButton = document.getElementById('apply-button');
+    applyButton.addEventListener('click', function () {
+      applyCustomCSS();
+    });
+
+    const importButton = document.getElementById('import-button');
+    importButton.addEventListener('click', function () {
+      importCSS();
+    });
+
+    const exportButton = document.getElementById('export-button');
+    exportButton.addEventListener('click', function () {
+      exportCSS();
+    });
+
+    function exportCSS() {
+      const cssEditor = monaco.editor.getModels()[0];
+      const cssContent = cssEditor.getValue();
+      const blob = new Blob([cssContent], { type: 'text/css' });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'custom.css';
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    
+    function importCSS() {
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'text/css';
+
+      fileInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          const importedCSS = e.target.result;
+          const cssEditor = monaco.editor.getModels()[0];
+          cssEditor.setValue(importedCSS);
+        };
+
+        reader.readAsText(file);
+      });
+
+      fileInput.click();
+    }
+
+    require.config({ paths: { 'vs': '/settings/css-editor/monaco' } });
+    require(['vs/editor/editor.main'], function () {
+      const editor = monaco.editor.create(document.getElementById('css-editor'), {
+        value: '',
+        language: 'css',
+        theme: 'vs-dark'
+      });
+
+      const cssSelect = document.getElementById('css-select');
+      cssSelect.addEventListener('change', function () {
+        loadSelectedCSS(editor);
+      });
+
+      function loadSelectedCSS(editor) {
+        const selectedCSS = cssSelect.value;
+
+        if (selectedCSS === 'custom') {
+          const customCSS = localStorage.getItem('websiteCSS');
+          if (customCSS) {
+            editor.setValue(customCSS);
+          }
+        } else {
+          fetch(selectedCSS)
+            .then(response => response.text())
+            .then(css => {
+              editor.setValue(css);
+            })
+            .catch(error => {
+              console.error('Error loading CSS:', error);
+            });
+        }
+      }
+
+      loadSelectedCSS(editor);
+    });
+  </script>
