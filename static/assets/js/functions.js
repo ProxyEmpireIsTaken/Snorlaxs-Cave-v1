@@ -7,6 +7,24 @@ function paramount () {
     });
 
 }
+function velocity () {
+
+    window.navigator.serviceWorker.register('/sw.js', {
+        scope: __uv$config.prefix
+    }).then(() => {
+        location.href=__uv$config.prefix + __uv$config.encodeUrl('https://velocity.radon.games');
+    });
+
+}
+function radon () {
+
+    window.navigator.serviceWorker.register('/sw.js', {
+        scope: __uv$config.prefix
+    }).then(() => {
+        location.href=__uv$config.prefix + __uv$config.encodeUrl('https://radon.games');
+    });
+
+}
 
 function tm () {
 
@@ -33,7 +51,7 @@ function widget () {
     window.navigator.serviceWorker.register('/sw.js', {
         scope: __uv$config.prefix
     }).then(() => {
-        location.href=__uv$config.prefix + __uv$config.encodeUrl('https://e.widgetbot.io/channels/1107344487958724681/1118576886038143157');
+        location.href=__uv$config.prefix + __uv$config.encodeUrl('https://e.widgetbot.io/channels/1136019584911155200/1136019585959743529');
     });
 
 }
