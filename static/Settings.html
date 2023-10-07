@@ -1,1 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/assets/img/newlogo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <script src="/assets/js/functions.js"></script>
+  <script data-cfasync="false" typ="text/javascript" src="ads.js"></script>
+  <title>Games | Snorlax's Cave</title>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZTCTYH80S1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-ZTCTYH80S1');
+</script>
+<!---body start-->
+<body>
+  <nav>
+    <div class="heading">
+       <a href="https://discord.gg/Cqaa8x82Ch" class="headinglink" target="new">Snorlax's Cave</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a class="active" href="/math">Games</a></li>
+      <li><a href="/english">Apps</a></li>
+      <li><a href="/science">Proxy</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+  </div>
+  <div class="setting">
+            <div class="settings-cont">
+               <p class="name">Stealth Mode</p>
+               <p class="description">Stops extensions from peeping</p>
+               <input id="undefined" type="checkbox" onclick="saveIc();toggleNoGG()">
+               <label for="undefined"></label>
+            </div>
+         </div>
+         <div class="settings-cont">
+            <p class="name">Clickoff Cloaking</p>
+            <p class="description">When you click off the tab, it will automatically morph to look like Google Classroom.</p>
+            <input id="clickoff" type="checkbox" onclick="saveIc();toggleClickoff()">
+            <label for="clickoff"></label>
+         </div>
+  <div class="settings-cont">
+            <p class="name"> Theme </p>
+            <p class="description"> Choose from our themes so your eyes don't hate us. </p>
+            <span class="custom-dropdown big">
+               <a>
+                  <select onchange="unsavedChanges()" class="dropdown" id="themeSwitcher">
+                     <option value="dark">Shades</option>
+                      <option value="suit">Suit (new) </option>
+                        <option value="metallic">Metallic (new) </option>
+                          <option value="dante">Dante (new) </option>
+                     <option value="light">Blizzard</option>
+                     
+                     <option value="custom">Custom (Beta)</option>
+                  </select>
+               </a>
+            </span>
+            <a onclick="saveIc();switchTheme();" class="button-save"> Apply </a>
+         </div>
+         <div class="settings-cont">
+            <p class="name" style="font-size: 21px;"> Custom AB Tab Info </p>
+            <p class="description"> Choose a custom Title + Favicon for your AB Tab </p>
+            <p class="secondary-desc"> Favicon URL: </p>
+            <input id="faviconInput" class="bareLocationInput" type="text">
+            <p class="secondary-desc"> Title: </p>
+            <input id="titleInput" class="bareLocationInput" type="text">
+            <a onclick="saveAbInfo();" class="button-save-alt"> Apply Options </a>
+            </span>
+         </div>
+         <div class="settings-cont">
+  <script>
+var noggStored = localStorage.getItem("nogg")
+var cloakStored = localStorage.getItem("ADVcloak")
+var cloakButton = document.getElementById("clickoff")
+var themeStored = localStorage.getItem("theme")
+var themeSelector = document.getElementById("themeSwitcher")
+if (noggStored == "on") {
+  noggButton.checked = true
+} else {
+  noggButton.checked = false
+}
+if (cloakStored == "on") {
+  cloakButton.checked = true
+} else {
+  cloakButton.checked = false
+}
+themeSelector.value = themeStored
+  </script>
+</body>
+</html>
